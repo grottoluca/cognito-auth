@@ -1,16 +1,26 @@
-const AWS = require('aws-sdk')
+const { CognitoIdentityClient } = require('@aws-sdk/client-cognito-identity')
+const { fromCognitoIdentityPool } = require('@aws-sdk/credential-providers')
 const jwt = require('jsonwebtoken')
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js')
 let cognitoAttributeList = []
 
 class AWSConfig {
-    
+
     constructor (region, identityPoolId, userPoolId, clientId) {
-        AWS.config.region = region // Region
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: identityPoolId,
+        // Store region for future use
+        this.region = region
+
+        // Create Cognito Identity client for AWS SDK v3
+        this.cognitoIdentityClient = new CognitoIdentityClient({ region })
+
+        // Create credentials provider using AWS SDK v3
+        // This replaces AWS.config.credentials from v2
+        this.credentials = fromCognitoIdentityPool({
+            client: this.cognitoIdentityClient,
+            identityPoolId: identityPoolId
         })
-        this.poolData = { 
+
+        this.poolData = {
             UserPoolId: userPoolId,
             ClientId: clientId,
         }
