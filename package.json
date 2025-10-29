@@ -1,9 +1,17 @@
 {
   "name": "cognito-auth",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "TypeScript-based AWS Cognito authentication library with full backward compatibility",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "src/**/*",
+    "README.md"
+  ],
   "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +30,14 @@
     "amazon-cognito-identity-js": "^5.2.10",
     "axios": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
-    "jwk-to-pem": "^2.0.5"
+    "jsonapi-serializer": "^3.6.7",
+    "jwk-to-pem": "^2.0.5",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/jwk-to-pem": "^2.0.3",
+    "@types/node": "^18.19.3",
+    "typescript": "^5.3.3"
   }
 }
